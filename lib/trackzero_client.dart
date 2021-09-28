@@ -30,7 +30,7 @@ class TrackZeroClient {
       "customAttributes": entity.customAttributes
     };
 
-    return await post('/entities?X-API-KEY=${this._apiKey}', body);
+    return await LogApi.upsertEntity(this._apiKey, body);
   }
 
   ///Deletes the Entity
@@ -44,7 +44,7 @@ class TrackZeroClient {
       "id": id,
     };
 
-    return await delete('/entities?X-API-KEY=${this._apiKey}', body);
+    return await LogApi.deleteEntity(this._apiKey, body);
   }
 
   ///Creates/Updates the Event
@@ -62,7 +62,7 @@ class TrackZeroClient {
       'Targets': event.targets
     };
 
-    return await post('/events?X-API-KEY=${this._apiKey}', body);
+    return await LogApi.upsertEvent(this._apiKey, body);
   }
 
   ///Deletes the Event
@@ -76,6 +76,18 @@ class TrackZeroClient {
       "id": id,
     };
 
-    return await delete('/events?X-API-KEY=${this._apiKey}', body);
+    return await LogApi.deleteEvent(this._apiKey, body);
+  }
+
+  ///Queries the configuration based on the groupId
+  ///
+  ///[groupId] - the configuration group Id
+  ///
+  ///[identifier] - {String | int} - the value you want to check the conditions on
+  Future<Response> queryConfiguration(
+      String groupId, dynamic identifier) async {
+    var body = {"identifier": identifier};
+
+    return await ConfigApi.queryConfiguration(this._apiKey, groupId, body);
   }
 }

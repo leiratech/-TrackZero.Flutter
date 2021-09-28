@@ -199,6 +199,19 @@ await instance.upsertEvent(checked);
 await instance.deleteEvent("type", "id");
 ```
 
+## Smart Configuration
+
+Customizable configurations based on certain conditions checked across a selection of your saved reports on the portal
+
+```dart
+///Queries the configuration based on the groupId
+///
+///[groupId] - the configuration group Id (Portal > Smart Configuration Page)
+///[identifier] - {String | int} - the value you want to check the conditions on
+
+await instance.queryConfiguration("groupId", "identifier");
+```
+
 # Resources
 
 [Changelog](./CHANGELOG.md)

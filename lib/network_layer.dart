@@ -1,6 +1,6 @@
 part of leiratech_trackzero;
 
-final _baseUrl = "https://api.trackzero.io/log";
+final _baseUrl = "https://api.trackzero.io";
 
 _request(String endpointUrl, body, String method) async {
   try {

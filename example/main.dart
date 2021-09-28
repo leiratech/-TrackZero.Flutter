@@ -58,4 +58,15 @@ void main() {
   }
 
   deleteEvent();
+
+  //--------------- Smart Configuration ---------------//
+
+  //After setting up your custom configurations on TrackZero Portal
+  //Get your GroupId from the "Smart Connfiguration" Page in the portal
+  queryConfig() async {
+    Response res = await instance.queryConfiguration("groupId", "identifier");
+    print(res.toString());
+  }
+
+  queryConfig();
 }
