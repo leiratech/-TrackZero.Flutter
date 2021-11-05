@@ -86,8 +86,6 @@ await instance.upsertEntity(user);
 
 #### Delete Entity
 
-> :warning: &nbsp; Deleting an entity will delete all events emitted by this entity.
-
 > :exclamation: &nbsp; Deletion is permanent and cannot be undone.
 
 ```dart
@@ -99,117 +97,22 @@ await instance.upsertEntity(user);
 await instance.deleteEntity("type", "id");
 ```
 
-## Event
+## Analytics Spaces
 
-Events are considered as actions that are emitted from an entity and impact another entity
+Each analytics space represents a separate database storing analytical data relevant to a specific subject/entity _user defined_.
 
-#### Create an Event object
+Each analytics space is able to build reports and dahsboards in TrackZero's space portal.
 
-```dart
-///Initializes the Event object
-///
-///[emitterType] - the entity type that emitted the event
-///[emitterId] - {String | int} - the entity id that emitted the event
-///[name] - the event name
-///
-///_OPTIONAL PARAMS_
-///
-///[id] - {String | int} - the event id.
-///[startTime] - (ISO 8601) The start time of the event.
-///[endTime] - (ISO 8601) The end time of the event.
-
-Event event = new Event(
-  "emitterType",
-  "emitterId",
-  "name",
-  ["id",
-  "startTime",
-  "endTime"]
-);
-```
-
-> **Note:** `startTime` and `endTime` are important, always try to set them. If both are not supplied, both will be set to the current time. If one is not supplied, it will be set to be equal to the other.
-
-> **Note:** The `id` of the event is important if you plan on changing or adding more information to the event later. You will need the `id` to make those changes.
-
-#### Add Attributes
+#### Get a Space Portal Session
 
 ```dart
-///Adds custom attributes to the event
+///Creates a space portal session
 ///
-///[attribute] - Event's attribute name
-///[value] - Event's attribute value
-
-event.addAttribute("attribute", "value");
-```
-
-#### Add Attributes Referencing Other Entities
-
-```dart
-///Adds custom attributes to the event that are related to another entity
+///[analyticsSpaceId] - the analytics space id
 ///
-///[attribute] - Event's attribute name
-///[referenceType] - Related to entity type
-///[referenceId] - {String | int} - Related to entity id
+///[ttl] - (in seconds) - default set to 3600 - time to live, when the session expires
 
-event.addEntityReferencedAttribute("attribute", "referenceType", "referenceId");
-```
-
-#### Add Impacted Entities
-
-```dart
-///Adds entities that were impacted by this event
-///
-///[impactedType] - Entity type that was impacted
-///[impactedId] - Entity Id that was impacted
-
-event.addImpactedTarget("impactedType", "impactedId");
-```
-
-#### Track Event
-
-```dart
-///Creates/Updates the Event
-await instance.upsertEvent(event);
-```
-
-> **Note:** Like the Entity object, upsert _(Update/Insert)_ is applied to the event's emitter, entity's referenced attributes in `addEntityReferencedAttribute`, and the impacted entities in `addImpactedTarget`.
-
-#### Complete Event Example
-
-```dart
-Event checked = new Event("User", "USER_ID", "Checked Out")
-  .addAttribute("Cart Total", 99.95)
-  .addEntityReferencedAttribute("Item", "Product", "SKU-1234")
-  .addImpactedTarget("Warehouse", "WH-BLVD-652");
-
-await instance.upsertEvent(checked);
-```
-
-#### Delete Event
-
-> :exclamation: &nbsp; Deletion is permanent and cannot be undone.
-
-```dart
-///Deletes the Event
-///
-///[type] - event type/name to be deleted
-///[id] - {String | int} - id of the event to be deleted
-
-await instance.deleteEvent("type", "id");
-```
-
-## Smart Configuration
-
-Customizable configurations based on certain conditions checked across a selection of your saved reports on the portal
-
-```dart
-///Queries the configuration based on the groupId
-///
-///[groupId] - the configuration group Id (Portal > Smart Configuration Page)
-///[identifier] - {String | int} - the value you want to check the conditions on
-
-await instance.queryConfiguration("groupId", "identifier");
+await instance.getSession(analyticsSpaceId, ttl);
 ```
 
 # Resources

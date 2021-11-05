@@ -1,3 +1,16 @@
+## 0.4.0
+
+Pivot Point: Introducing TrackZero's Analytics Space Portal
+
+### Features:
+
+- Creating a session to connect to an analytical space
+
+#### Depricated:
+
+- `Event`
+- `Smart Configuration`
+
 ## 0.3.0
 
 Smart Configuration Querying

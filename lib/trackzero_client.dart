@@ -47,47 +47,13 @@ class TrackZeroClient {
     return await LogApi.deleteEntity(this._apiKey, body);
   }
 
-  ///Creates/Updates the Event
-  Future<Response> upsertEvent(Event event) async {
-    var body = {
-      "id": event.id,
-      "emitter": {
-        "type": event.emitterType,
-        "id": event.emitterId,
-      },
-      "startTime": event.startTime,
-      "endTime": event.endTime,
-      "name": event.name,
-      "CustomAttributes": event.customAttributes,
-      'Targets': event.targets
-    };
-
-    return await LogApi.upsertEvent(this._apiKey, body);
-  }
-
-  ///Deletes the Event
+  ///Gets a space portal session
   ///
-  ///[type] - event type/name to be deleted
+  ///[analyticsSpaceId] - the analytics space id
   ///
-  ///[id] - {String | int} - id of the event to be deleted
-  Future<Response> deleteEvent(String type, dynamic id) async {
-    var body = {
-      "type": type,
-      "id": id,
-    };
-
-    return await LogApi.deleteEvent(this._apiKey, body);
-  }
-
-  ///Queries the configuration based on the groupId
-  ///
-  ///[groupId] - the configuration group Id
-  ///
-  ///[identifier] - {String | int} - the value you want to check the conditions on
-  Future<Response> queryConfiguration(
-      String groupId, dynamic identifier) async {
-    var body = {"identifier": identifier};
-
-    return await ConfigApi.queryConfiguration(this._apiKey, groupId, body);
+  ///[ttl] - (in seconds) time to live, when the session expires
+  Future<Response> getSession(int analyticsSpaceId, [int ttl = 3600]) async {
+    if (this._apiKey == null) return Response(400, {"error": "API key null"});
+    return await SpaceApi.getSession(this._apiKey!, analyticsSpaceId, ttl);
   }
 }

@@ -1,6 +1,6 @@
 name: leiratech_trackzero
 description: TrackZero is a full analytics platform that allows you to track what is happening in your system in real time.
-version: 0.3.0
+version: 0.4.0
 homepage: https://github.com/leiratech/TrackZero.Flutter
 repository: https://github.com/leiratech/TrackZero.Flutter
 documentation: https://docs.trackzero.io/

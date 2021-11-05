@@ -35,38 +35,13 @@ void main() {
 
   deleteEntity();
 
-  //--------------- Event ---------------//
+  //--------------- Analytics Space ---------------//
 
-  //Create an Event
-  Event checked = new Event("User", 1, "Checked Out", "EVT-1234")
-      .addAttribute("Cart Total", 99.95)
-      .addEntityReferencedAttribute("Item", "Product", "SKU-1234")
-      .addImpactedTarget("Warehouse", "WH-BLVD-652");
-
-  //Creates/Updates the entity
-  setEvent() async {
-    Response res = await instance.upsertEvent(checked);
+  //Get the Space Portal Session
+  getSession() async {
+    Response res = await instance.getSession(123);
     print(res.toString());
   }
 
-  setEvent();
-
-  //Delete an Event
-  deleteEvent() async {
-    Response res = await instance.deleteEvent("Checked Out", "EVT-1234");
-    print(res.toString());
-  }
-
-  deleteEvent();
-
-  //--------------- Smart Configuration ---------------//
-
-  //After setting up your custom configurations on TrackZero Portal
-  //Get your GroupId from the "Smart Connfiguration" Page in the portal
-  queryConfig() async {
-    Response res = await instance.queryConfiguration("groupId", "identifier");
-    print(res.toString());
-  }
-
-  queryConfig();
+  getSession();
 }
